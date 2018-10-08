@@ -1,0 +1,6 @@
+{
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "search.exclude": {
+    "build": true
+  }
+}

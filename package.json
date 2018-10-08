@@ -1,0 +1,33 @@
+{
+  "name": "rastreia-correios-telegram",
+  "version": "0.0.1",
+  "description": "Bot do telegram para rastramento de encomendas do correio",
+  "main": "build/app/main.js",
+  "repository": "https://github.com/ynixt/rastreiaCorreiosTelegram.git",
+  "author": "Gabriel Alves Silva",
+  "license": "MIT",
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^0.18.0",
+    "dotenv": "^6.0.0",
+    "global": "^4.3.2",
+    "telegraf": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^4.0.3",
+    "@types/node": "^10.11.4",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.1.1"
+  },
+  "engines": {
+    "node": ">=10.0.0",
+    "yarn": ">=1.10.0"
+  },
+  "scripts": {
+    "start": "node build/app/main.js",
+    "start:dev": "yarn run build:live",
+    "build": "tsc -p .",
+    "build:live": "nodemon -e ts,json --exec ts-node src/app/main.ts",
+    "inspect": "nodemon -e ts,json --exec node --inspect-brk -r ts-node/register src/app/main.ts"
+  }
+}
