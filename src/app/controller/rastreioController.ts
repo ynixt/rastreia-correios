@@ -20,7 +20,13 @@ export default class RastreioController {
   }
 
   async rastrear(agent) {
-    const codigoPacote = agent.parameters.Codigo_Pacote;
+
+    if (agent.parameters.Codigo_Pacote == null || agent.parameters.Codigo_Pacote.trim() === '') {
+      agent.add(`Encomenda não encontrada.`);
+      return;
+    }
+
+    const codigoPacote = agent.parameters.Codigo_Pacote.replace(/[ \-]/g, "");
     const evento = await RastreioService.obterUltimoEvento(codigoPacote);
 
     if (evento == null) {
