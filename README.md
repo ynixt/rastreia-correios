@@ -2,8 +2,4 @@
 
 ** Ainda em desenvolvimento **
 
-## Funções atuais:
-
-**/rastreio CODIGO_ENCOMEDA** retorna o último status de rastreio
-
-![rastreio exemplo](https://raw.githubusercontent.com/ynixt/rastreia-correios-telegram/master/exemplos/rastreio.png)
+![rastreio exemplo](https://raw.githubusercontent.com/ynixt/rastreia-correios/master/exemplos/rastreio.png)
