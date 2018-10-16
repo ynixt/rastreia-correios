@@ -1,4 +1,4 @@
-# Bot do telegram para rastreio de encomendas
+# Bot que utiliza o dialogflow e realiza rastreio de encomendas do correio
 
 ** Ainda em desenvolvimento **
 
