@@ -2,10 +2,11 @@ FROM node:alpine
 
 WORKDIR /usr/src/app
 
+RUN apk add yarn
+
 COPY package.json ./
 COPY yarn.lock ./
 
-RUN apk add yarn
 RUN yarn install --ignore-engines
 
 COPY . .
