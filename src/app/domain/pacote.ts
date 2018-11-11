@@ -3,7 +3,7 @@ import Evento from "./evento";
 export default class Pacote {
 
   constructor(
-    private _numero: string,
+    private _codigo: string,
     private _erro?: string,
     private _eventos?: Array<Evento>
   ) {
@@ -12,8 +12,8 @@ export default class Pacote {
     }
   }
 
-  get numero(): string {
-    return this._numero;
+  get codigo(): string {
+    return this._codigo;
   }
 
   get erro(): string {

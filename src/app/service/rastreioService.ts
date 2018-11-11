@@ -9,7 +9,7 @@ export default class RastreioService {
     const pacote = new Pacote(codigoRastreio);
 
     try {
-      const eventos: Array<Evento> = (await axios.get(`http://track.linketrack.com/${codigoRastreio}/json`)).data as Array<Evento>;
+      const eventos: Array<Evento> = (await axios.get(`http://track.linketrack.com/${codigoRastreio}/json`)).data.eventos as Array<Evento>;
       pacote.eventos = eventos;
     } catch (err) {
       pacote.erro = err;

@@ -1,6 +1,7 @@
 
 import { JsonController, Post, Req, Res, Body } from 'routing-controllers';
 import RastreioService from '../service/rastreioService';
+import Evento from '../domain/evento';
 
 @JsonController()
 export default class RastreioController {
@@ -12,22 +13,34 @@ export default class RastreioController {
     const agent = new WebhookClient({ request: request, response: response });
 
     const intentMap = new Map();
+
     intentMap.set('Rastrear pacote', () => {
       return this.rastrear(agent);
+    });
+
+    intentMap.set('O pacote já foi entregue?', () => {
+      return this.verificarSeJafoiEntregue(agent);
     });
 
     return agent.handleRequest(intentMap);
   }
 
-  async rastrear(agent) {
+  private validarSeCodigoPacotePresente(agent): boolean {
+    return agent.parameters.Codigo_Pacote != null && agent.parameters.Codigo_Pacote.trim() !== '';
+  }
 
-    if (agent.parameters.Codigo_Pacote == null || agent.parameters.Codigo_Pacote.trim() === '') {
+  private async obterUltimoEvento(agent): Promise<Evento> {
+    const codigoPacote = agent.parameters.Codigo_Pacote.replace(/[ \-]/g, "");
+    return await RastreioService.obterUltimoEvento(codigoPacote);
+  }
+
+  async rastrear(agent) {
+    if (!this.validarSeCodigoPacotePresente(agent)) {
       agent.add(`Encomenda não encontrada.`);
       return;
     }
 
-    const codigoPacote = agent.parameters.Codigo_Pacote.replace(/[ \-]/g, "");
-    const evento = await RastreioService.obterUltimoEvento(codigoPacote);
+    const evento = await this.obterUltimoEvento(agent);
 
     if (evento == null) {
       agent.add(`Encomenda não encontrada.`);
@@ -37,4 +50,29 @@ export default class RastreioController {
       );
     }
   }
+
+  async verificarSeJafoiEntregue(agent) {
+    if (!this.validarSeCodigoPacotePresente(agent)) {
+      agent.add(`Encomenda não encontrada.`);
+      return;
+    }
+
+    const evento = await this.obterUltimoEvento(agent);
+
+    if (evento == null) {
+      agent.add(`Encomenda não encontrada.`);
+    } else {
+      if (evento.status === 'Objeto entregue ao destinatário') {
+        agent.add(`Ótima notícia! Seu produto foi entregue às ${evento.hora} - ${evento.data}.`);
+      } else if (evento.status.indexOf('Objeto aguardando retirada')) {
+        agent.add(`Mais ou menos... Identificamos o evento '${evento.status}' às ${evento.hora} - ${evento.data}.`);
+      } else {
+        agent.add('Ainda não :(.' + '\n' +
+          `${evento.local}, ${evento.hora} - ${evento.data}`
+        );
+      }
+    }
+  }
+
+
 }
