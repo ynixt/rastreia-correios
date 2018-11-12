@@ -1,9 +1,9 @@
 {
-  "name": "rastreia-correios-telegram",
-  "version": "0.0.1",
-  "description": "Bot do telegram para rastramento de encomendas do correio",
+  "name": "rastreia-correios",
+  "version": "1.0.0",
+  "description": "Bot dialogflow para rastramento de encomendas do correio",
   "main": "build/app/main.js",
-  "repository": "https://github.com/ynixt/rastreiaCorreiosTelegram.git",
+  "repository": "https://github.com/ynixt/rastreia-correios",
   "author": "Gabriel Alves Silva",
   "license": "MIT",
   "dependencies": {
