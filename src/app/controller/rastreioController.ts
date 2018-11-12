@@ -1,10 +1,15 @@
 
-import { JsonController, Post, Req, Res, Body } from 'routing-controllers';
+import { JsonController, Post, Req, Res, Body, Get, Render } from 'routing-controllers';
 import RastreioService from '../service/rastreioService';
 import Evento from '../domain/evento';
-
 @JsonController()
 export default class RastreioController {
+
+  @Get('')
+  @Render("index.html")
+  home() {
+  }
+
   @Post('/rastreio-pacote-dialog-flow')
   post(@Body() body: any, @Req() request: any, @Res() response: any) {
     request.body = body;
